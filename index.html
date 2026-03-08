@@ -28,10 +28,10 @@ overflow:hidden;
 /* ENTER SCREEN */
 
 #enter-screen{
-position:absolute;
 text-align:center;
 opacity:1;
-transition:opacity 1.5s ease;
+transition:opacity 1.2s ease;
+z-index:2;
 }
 
 .title{
@@ -54,26 +54,26 @@ background:white;
 color:black;
 }
 
-/* GIF */
+/* GIF SCREEN */
 
-#gif{
+#gif-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
 opacity:0;
-transition:opacity 1.5s ease;
+transition:opacity 1.2s ease;
+pointer-events:none;
 }
 
-#gif img{
-max-width:420px;
+#gif-screen img{
+max-width:400px;
 height:auto;
-}
-
-/* animation states */
-
-.fade-out{
-opacity:0;
-}
-
-.fade-in{
-opacity:1;
 }
 
 </style>
@@ -89,7 +89,7 @@ opacity:1;
 
 </div>
 
-<div id="gif">
+<div id="gif-screen">
 
 <img src="eye.gif">
 
@@ -99,8 +99,11 @@ opacity:1;
 
 function enterSite(){
 
-document.getElementById("enter-screen").classList.add("fade-out");
-document.getElementById("gif").classList.add("fade-in");
+document.getElementById("enter-screen").style.opacity = "0";
+
+let gif = document.getElementById("gif-screen");
+gif.style.pointerEvents = "auto";
+gif.style.opacity = "1";
 
 }
 

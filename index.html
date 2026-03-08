@@ -52,7 +52,6 @@ background:white;
 color:black;
 }
 
-
 #gif-screen{
 position:fixed;
 top:0;
@@ -92,6 +91,9 @@ height:auto;
 
 </div>
 
+<!-- music file -->
+<audio id="bg-music" src="music.mp3" loop></audio>
+
 <script>
 
 function enterSite(){
@@ -101,6 +103,9 @@ document.getElementById("enter-screen").style.opacity = "0";
 let gif = document.getElementById("gif-screen");
 gif.style.pointerEvents = "auto";
 gif.style.opacity = "1";
+
+/* start music after clicking enter */
+document.getElementById("bg-music").play();
 
 }
 

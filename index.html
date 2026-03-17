@@ -94,7 +94,7 @@ display:flex;
 flex-direction:column;
 justify-content:space-between;
 
-height:380px; /* FORCE SAME HEIGHT */
+height:380px;
 
 background: rgba(255,255,255,0.05);
 backdrop-filter: blur(14px);
@@ -152,7 +152,7 @@ letter-spacing:1px;
 text-align:center;
 }
 
-/* BUTTONS LOCKED TO BOTTOM */
+/* BUTTONS */
 .buttons{
 display:flex;
 gap:10px;
@@ -213,7 +213,7 @@ color:black;
 <div class="handle"></div>
 </div>
 <div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank">discord</a
+<a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank">discord</a>
 <a class="profile-btn" href="https://www.roblox.com/users/profile?username=anemicx_v" target="_blank">roblox</a>
 </div>
 </div>
@@ -255,8 +255,6 @@ color:black;
 </div>
 
 <script>
-
-/* ENTER */
 let audioStarted = false;
 
 function enterSite(){
@@ -275,7 +273,6 @@ function enterSite(){
   startTyping();
 }
 
-/* AUDIO */
 let bgAudio;
 
 function startMusic(){
@@ -295,7 +292,6 @@ function startMusic(){
   });
 }
 
-/* TYPE */
 function typeWriter(el,text,speed=65){
   let i=0;
   function type(){
@@ -314,7 +310,6 @@ function startTyping(){
   });
 }
 
-/* SNOW */
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
 
@@ -372,8 +367,8 @@ function drawSnow(){
 }
 
 drawSnow();
-
 </script>
 
 </body>
+</html>
 </html>

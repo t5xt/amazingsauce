@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>x_x</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:black;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Rajdhani', sans-serif;
+overflow:hidden;
+}
+
+/* SNOW */
+
+#snow{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:2;
+}
+
+/* ENTER SCREEN */
+
+#enter-screen{
+text-align:center;
+opacity:1;
+transition:opacity 1.2s ease;
+z-index:3;
+position:relative;
+}
+
+.title{
+font-size:28px;
+letter-spacing:4px;
+margin-bottom:25px;
+}
+
+.enter-btn{
+border:1px solid rgba(255,255,255,0.8);
+padding:8px 22px;
+display:inline-block;
+cursor:pointer;
+letter-spacing:3px;
+font-size:13px;
+text-transform:lowercase;
+transition:0.25s;
+}
+
+.enter-btn:hover{
+background:white;
+color:black;
+}
+
+/* PROFILE SCREEN */
+
+#profile-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:90px;
+opacity:0;
+transition:opacity 1.2s ease;
+pointer-events:none;
+z-index:3;
+flex-wrap:wrap;
+}
+
+.profile{
+display:flex;
+flex-direction:column;
+align-items:center;
+border:2px solid white;
+padding:28px;
+width:240px;
+transition:0.25s;
+}
+
+.profile:hover{
+transform:scale(1.05);
+}
+
+.profile img{
+width:170px;
+height:170px;
+border-radius:50%;
+margin-bottom:16px;
+object-fit:cover;
+}
+
+/* placeholder avatar */
+
+.no-pfp{
+width:170px;
+height:170px;
+border-radius:50%;
+border:2px solid white;
+margin-bottom:16px;
+}
+
+.name{
+font-size:20px;
+letter-spacing:2px;
+min-height:24px;
+}
+
+.handle{
+font-size:14px;
+opacity:0.7;
+margin-top:6px;
+margin-bottom:12px;
+letter-spacing:1px;
+}
+
+/* BUTTONS */
+
+.buttons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.profile-btn{
+border:1px solid rgba(255,255,255,0.8);
+padding:6px 18px;
+cursor:pointer;
+letter-spacing:2px;
+font-size:12px;
+text-transform:lowercase;
+transition:0.2s;
+text-decoration:none;
+color:white;
+}
+
+.profile-btn:hover{
+background:white;
+color:black;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="snow"></canvas>
+
+<div id="enter-screen">
+<div class="title">x_x</div>
+<div class="enter-btn" onclick="enterSite()">𝚎𝚗𝚝𝚎𝚛</div>
+</div>
+
+<div id="profile-screen">
+
+<div class="profile">
+<img src="images/charlie.webp">
+<div class="name" data-name="charlie"></div>
+<div class="handle">@californiacrazy2019</div>
+<div class="buttons">
+<a class="profile-btn" href="https://discord.com/users/californiacrazy2019" target="_blank">discord</a>
+<a class="profile-btn" href="https://www.roblox.com/users/profile?username=iwhu" target="_blank">roblox</a>
+</div>
+</div>
+
+<div class="profile">
+<img src="images/emre.webp">
+<div class="name" data-name="emre"></div>
+<div class="handle">@im_not_alex_g_and_ur_not_sarah</div>
+<div class="buttons">
+<a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank">discord</a>
+<a class="profile-btn" href="https://www.roblox.com/users/profile?username=anemicx_v" target="_blank">roblox</a>
+</div>
+</div>
+
+<div class="profile">
+<img src="images/ethan.webp">
+<div class="name" data-name="ethan"></div>
+<div class="handle">@skulling</div>
+<div class="buttons">
+<a class="profile-btn" href="https://discord.com/users/skulling" target="_blank">discord</a>
+<a class="profile-btn" href="https://www.roblox.com/users/profile?username=x051910" target="_blank">roblox</a>
+</div>
+</div>
+
+<div class="profile">
+<img src="images/zes.webp">
+<div class="name" data-name="zes"></div>
+<div class="handle">@imbreviate</div>
+<div class="buttons">
+<a class="profile-btn" href="https://discord.com/users/imbreviate" target="_blank">discord</a>
+</div>
+</div>
+
+<div class="profile">
+<div class="no-pfp"></div>
+<div class="name" data-name="carnage"></div>
+<div class="handle">@brainteasing</div>
+<div class="buttons">
+<a class="profile-btn" href="https://discord.com/users/brainteasting" target="_blank">discord</a>
+</div>
+</div>
+
+</div>
+
+<audio id="bg-music" src="media/music.mp3" loop></audio>
+
+<script>
+
+/* ENTER */
+
+function enterSite(){
+
+document.getElementById("enter-screen").style.opacity="0";
+
+let profiles=document.getElementById("profile-screen");
+profiles.style.pointerEvents="auto";
+profiles.style.opacity="1";
+
+document.getElementById("bg-music").play();
+
+startTyping();
+
+}
+
+/* TYPEWRITER */
+
+function typeWriter(el,text,speed=80){
+
+let i=0;
+
+function type(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,speed);
+}
+}
+
+type();
+
+}
+
+function startTyping(){
+document.querySelectorAll(".name").forEach(el=>{
+typeWriter(el,el.dataset.name);
+});
+}
+
+/* SNOW */
+
+const canvas=document.getElementById("snow");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+let snow=[];
+
+const layers=[
+{count:60,size:1,speed:0.3,opacity:0.3},
+{count:50,size:2,speed:0.6,opacity:0.6},
+{count:40,size:3,speed:1,opacity:0.9}
+];
+
+layers.forEach(layer=>{
+for(let i=0;i<layer.count;i++){
+snow.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:layer.size+Math.random()*layer.size,
+speed:layer.speed+Math.random()*layer.speed,
+opacity:layer.opacity
+});
+}
+});
+
+function drawSnow(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+snow.forEach(flake=>{
+ctx.beginPath();
+ctx.arc(flake.x,flake.y,flake.r,0,Math.PI*2);
+ctx.fillStyle=`rgba(255,255,255,${flake.opacity})`;
+ctx.fill();
+});
+
+moveSnow();
+requestAnimationFrame(drawSnow);
+
+}
+
+function moveSnow(){
+
+snow.forEach(flake=>{
+
+flake.y+=flake.speed;
+flake.x+=Math.sin(flake.y*0.01)*0.5;
+
+if(flake.y>canvas.height){
+flake.y=-10;
+flake.x=Math.random()*canvas.width;
+}
+
+});
+
+}
+
+drawSnow();
+
+</script>
+
+</body>
+</html>

@@ -69,51 +69,40 @@ background:white;
 color:black;
 }
 
-/* PROFILE ROW (UPDATED) */
+/* PROFILE GRID */
 #profile-screen{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-
-display:flex;
-align-items:center;
-gap:25px;
-
-overflow-x:auto;
-overflow-y:hidden;
-
-padding:40px;
+display:grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 240px));
+justify-content:center;
+align-content:center;
+gap:40px;
 opacity:0;
 transition:opacity 1.2s ease;
 pointer-events:none;
 z-index:3;
-
-scroll-behavior:smooth;
-}
-
-/* hide scrollbar */
-#profile-screen::-webkit-scrollbar{
-display:none;
+padding:40px;
 }
 
 /* GLASS CARD */
 .profile{
-flex:0 0 auto;
-width:180px;
-height:320px;
-
 display:flex;
 flex-direction:column;
 justify-content:space-between;
+
+height:380px;
 
 background: rgba(255,255,255,0.05);
 backdrop-filter: blur(14px);
 border:1px solid rgba(255,255,255,0.15);
 
 border-radius:18px;
-padding:18px;
+padding:25px;
+width:240px;
 
 transition:0.3s;
 box-shadow:0 0 20px rgba(255,255,255,0.05);
@@ -131,43 +120,42 @@ align-items:center;
 }
 
 .profile img{
-width:100px;
-height:100px;
+width:150px;
+height:150px;
 border-radius:50%;
-margin-bottom:12px;
+margin-bottom:14px;
 object-fit:cover;
 border:2px solid rgba(255,255,255,0.2);
 }
 
+.no-pfp{
+width:150px;
+height:150px;
+border-radius:50%;
+border:2px solid rgba(255,255,255,0.2);
+margin-bottom:14px;
+}
+
 .name{
-font-size:18px;
+font-size:20px;
 letter-spacing:2px;
+min-height:24px;
 text-align:center;
 }
 
 .handle{
-font-size:13px;
+font-size:14px;
 opacity:0.6;
-margin-top:4px;
-margin-bottom:4px;
+margin-top:6px;
+margin-bottom:10px;
 letter-spacing:1px;
 text-align:center;
-}
-
-/* BIO */
-.bio{
-font-size:12px;
-opacity:0.7;
-text-align:center;
-min-height:30px;
-margin-bottom:8px;
-padding:0 5px;
 }
 
 /* BUTTONS */
 .buttons{
 display:flex;
-gap:8px;
+gap:10px;
 flex-wrap:wrap;
 justify-content:center;
 margin-top:auto;
@@ -175,10 +163,10 @@ margin-top:auto;
 
 .profile-btn{
 border:1px solid rgba(255,255,255,0.2);
-padding:5px 12px;
+padding:6px 16px;
 cursor:pointer;
 letter-spacing:2px;
-font-size:11px;
+font-size:12px;
 text-transform:lowercase;
 text-decoration:none;
 color:white;
@@ -206,13 +194,11 @@ color:black;
 
 <div id="profile-screen">
 
-<!-- ALL PROFILES -->
-
 <div class="profile">
 <div class="profile-top">
 <img src="images/charlie.webp">
-<div class="name">caught</div>
-<div class="bio" data-bio="alicia my love"></div>
+<div class="name" data-name="caught"></div>
+<div class="handle"></div>
 </div>
 <div class="buttons">
 <a class="profile-btn" href="https://discord.com/users/californiacrazy2019" target="_blank">discord</a>
@@ -223,8 +209,8 @@ color:black;
 <div class="profile">
 <div class="profile-top">
 <img src="images/emre.webp">
-<div class="name">anemic</div>
-<div class="bio" data-bio="every time we talk, think i go off script"></div>
+<div class="name" data-name="anemic"></div>
+<div class="handle"></div>
 </div>
 <div class="buttons">
 <a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank">discord</a>
@@ -234,22 +220,9 @@ color:black;
 
 <div class="profile">
 <div class="profile-top">
-<img src="images/lana.webp">
-<div class="name">lana</div>
-<div class="bio" data-bio="i'll beat ur nan to death fam"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/yoursopatheticx_x" target="_blank">discord</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=lovesixck" target="_blank">roblox</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=lovesixck" target="_blank">riot</a>
-</div>
-</div>
-
-<div class="profile">
-<div class="profile-top">
 <img src="images/ethan.webp">
-<div class="name">seek</div>
-<div class="bio" data-bio="stronger on my own"></div>
+<div class="name" data-name="seek"></div>
+<div class="handle"></div>
 </div>
 <div class="buttons">
 <a class="profile-btn" href="https://discord.com/users/skulling" target="_blank">discord</a>
@@ -260,36 +233,22 @@ color:black;
 <div class="profile">
 <div class="profile-top">
 <img src="images/zes.webp">
-<div class="name">zes</div>
-<div class="bio" data-bio="life is really hard, but my dick is harder"></div>
+<div class="name" data-name="zes"></div>
+<div class="handle"></div>
 </div>
 <div class="buttons">
 <a class="profile-btn" href="https://discord.com/users/imbreviate" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/spiritualisted" target="_blank">telegram</a>
 </div>
 </div>
 
 <div class="profile">
 <div class="profile-top">
 <img src="images/carnage.webp">
-<div class="name">carnage</div>
-<div class="bio" data-bio="born to rape the world"></div>
+<div class="name" data-name="carnage"></div>
+<div class="handle"></div>
 </div>
 <div class="buttons">
 <a class="profile-btn" href="https://discord.com/users/brainteasting" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/innoculate" target="_blank">telegram</a>
-</div>
-</div>
-
-<div class="profile">
-<div class="profile-top">
-<img src="images/vale.webp">
-<div class="name">vale</div>
-<div class="bio" data-bio="blue bands blue bands blue bands"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/1093044147243450460" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/curful" target="_blank">telegram</a>
 </div>
 </div>
 
@@ -311,7 +270,7 @@ function enterSite(){
   },1000);
 
   startMusic();
-  setupHoverTyping();
+  startTyping();
 }
 
 let bgAudio;
@@ -333,42 +292,24 @@ function startMusic(){
   });
 }
 
-function typeWriter(el, text, speed = 25){
-  let i = 0;
-
+function typeWriter(el,text,speed=65){
+  let i=0;
   function type(){
-    if(!el.isTyping) return;
-
-    if(i < text.length){
-      el.innerHTML += text.charAt(i);
+    if(i<text.length){
+      el.innerHTML+=text.charAt(i);
       i++;
-      el.typingTimeout = setTimeout(type, speed);
+      setTimeout(type,speed);
     }
   }
-
   type();
 }
 
-function setupHoverTyping(){
-  document.querySelectorAll(".profile").forEach(profile => {
-    const bio = profile.querySelector(".bio");
-    const text = bio.dataset.bio;
-
-    profile.addEventListener("mouseenter", () => {
-      bio.innerHTML = "";
-      bio.isTyping = true;
-      typeWriter(bio, text);
-    });
-
-    profile.addEventListener("mouseleave", () => {
-      bio.isTyping = false;
-      clearTimeout(bio.typingTimeout);
-      bio.innerHTML = "";
-    });
+function startTyping(){
+  document.querySelectorAll(".name").forEach(el=>{
+    typeWriter(el,el.dataset.name);
   });
 }
 
-/* SNOW */
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
 

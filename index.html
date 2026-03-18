@@ -2,338 +2,952 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>x_x</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bg:#030405;
+  --bg-soft:#0a0d12;
+  --panel:rgba(10, 12, 16, 0.88);
+  --panel-2:rgba(14, 17, 22, 0.96);
+  --line:rgba(255,255,255,0.08);
+  --line-strong:rgba(255,255,255,0.18);
+  --text:#f4f2ec;
+  --muted:rgba(244,242,236,0.58);
+  --accent:#ddd2bf;
+  --accent-strong:#f0e8d8;
+  --danger:#8d6c6c;
+  --shadow:0 28px 80px rgba(0,0,0,0.55);
+}
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-background: radial-gradient(circle at top, #0a0a0a, #000);
-color:white;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:'Rajdhani', sans-serif;
-overflow:hidden;
+  min-height:100vh;
+  overflow:hidden;
+  color:var(--text);
+  font-family:"Manrope", sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(221, 210, 191, 0.07), transparent 24%),
+    radial-gradient(circle at 100% 100%, rgba(141, 108, 108, 0.08), transparent 24%),
+    linear-gradient(180deg, #08090b 0%, #040506 40%, #020203 100%);
 }
 
-/* SNOW */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,0.75), transparent 90%);
+}
+
 #snow{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-z-index:1;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:1;
+  opacity:0.7;
 }
 
-/* ENTER */
+.vignette{
+  position:fixed;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:radial-gradient(circle, transparent 38%, rgba(0,0,0,0.26) 72%, rgba(0,0,0,0.7) 100%);
+}
+
+.shell{
+  position:relative;
+  z-index:3;
+  min-height:100vh;
+}
+
+#enter-screen,
+#profile-screen{
+  position:fixed;
+  inset:0;
+  transition:opacity 0.9s ease, visibility 0.9s ease;
+}
+
 #enter-screen{
-text-align:center;
-opacity:1;
-transition:opacity 1.2s ease;
-z-index:3;
-position:relative;
+  display:grid;
+  place-items:center;
+  padding:24px;
+}
+
+.hero{
+  width:min(920px, 100%);
+  padding:26px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:linear-gradient(180deg, rgba(11,13,16,0.92), rgba(5,6,8,0.96));
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(16px);
+}
+
+.hero-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:28px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+
+.seal{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  color:var(--muted);
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-size:11px;
+}
+
+.seal::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 18px rgba(221, 210, 191, 0.35);
+}
+
+.hero-tag{
+  padding:8px 12px;
+  border:1px solid rgba(240, 232, 216, 0.12);
+  border-radius:999px;
+  color:var(--accent);
+  background:rgba(255,255,255,0.02);
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.3fr 0.7fr;
+  gap:22px;
+}
+
+.hero-copy{
+  padding-right:10px;
 }
 
 .title{
-font-size:32px;
-letter-spacing:6px;
-margin-bottom:30px;
-text-shadow:0 0 15px rgba(255,255,255,0.2);
+  font-family:"Rajdhani", sans-serif;
+  font-size:clamp(64px, 10vw, 138px);
+  line-height:0.86;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+}
+
+.subtitle{
+  margin-top:16px;
+  max-width:540px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+
+.enter-btn,
+.ghost-btn,
+.profile-btn,
+.sound-toggle{
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.enter-btn,
+.ghost-btn,
+.sound-toggle{
+  min-height:46px;
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:"Rajdhani", sans-serif;
+  font-size:13px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
 }
 
 .enter-btn{
-border:1px solid rgba(255,255,255,0.2);
-padding:10px 28px;
-cursor:pointer;
-letter-spacing:3px;
-font-size:13px;
-text-transform:lowercase;
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(10px);
-border-radius:10px;
-transition:0.3s;
+  color:#0a0b0d;
+  background:linear-gradient(135deg, var(--accent-strong), var(--accent));
+  box-shadow:0 12px 32px rgba(221, 210, 191, 0.16);
 }
 
-.enter-btn:hover{
-background:white;
-color:black;
+.ghost-btn,
+.sound-toggle{
+  color:var(--text);
+  background:rgba(255,255,255,0.02);
+  border-color:var(--line);
 }
 
-/* PROFILE SCREEN (FIXED: centered, no scroll) */
+.enter-btn:hover,
+.ghost-btn:hover,
+.profile-btn:hover,
+.sound-toggle:hover{
+  transform:translateY(-2px);
+}
+
+.hero-side{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+.hero-side-label{
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+}
+
+.hero-side-list{
+  margin-top:14px;
+  display:grid;
+  gap:12px;
+}
+
+.hero-side-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:13px;
+}
+
+.hero-side-item:last-child{
+  border-bottom:none;
+}
+
+.hero-side-item span:first-child{
+  color:var(--muted);
+}
+
+.hero-side-item span:last-child{
+  color:var(--accent-strong);
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  font-size:11px;
+}
+
 #profile-screen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-flex-wrap:wrap;
-
-gap:25px;
-
-overflow:hidden;
-
-padding:40px;
-opacity:0;
-transition:opacity 1.2s ease;
-pointer-events:none;
-z-index:3;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  justify-content:center;
+  padding:22px;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
 }
 
-/* GLASS CARD */
+.topbar{
+  width:min(1280px, 100%);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(9,11,14,0.82);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(16px);
+}
+
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+  font-family:"Rajdhani", sans-serif;
+  font-size:20px;
+  letter-spacing:0.1em;
+}
+
+.topbar-copy h2{
+  font-family:"Rajdhani", sans-serif;
+  font-size:26px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+}
+
+.topbar-copy p{
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:0.08em;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,0.02);
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+}
+
+.profiles-shell{
+  width:min(1280px, 100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  gap:16px;
+}
+
 .profile{
-width:180px;
-height:320px;
+  grid-column:span 3;
+  position:relative;
+  min-height:344px;
+  display:flex;
+  flex-direction:column;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(180deg, rgba(15, 17, 21, 0.96), rgba(7, 8, 10, 0.98));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+}
 
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(14px);
-border:1px solid rgba(255,255,255,0.15);
-
-border-radius:18px;
-padding:18px;
-
-transition:0.3s;
-box-shadow:0 0 20px rgba(255,255,255,0.05);
+.profile::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(221, 210, 191, 0.05), transparent 24%),
+    radial-gradient(circle at top right, rgba(221, 210, 191, 0.06), transparent 26%);
+  opacity:0;
+  transition:opacity 0.28s ease;
+  pointer-events:none;
 }
 
 .profile:hover{
-transform:translateY(-6px) scale(1.05);
-box-shadow:0 0 35px rgba(255,255,255,0.15);
+  transform:translateY(-6px);
+  border-color:var(--line-strong);
+  background:linear-gradient(180deg, rgba(17, 20, 25, 0.98), rgba(8, 10, 13, 1));
 }
 
-.profile-top{
-display:flex;
-flex-direction:column;
-align-items:center;
+.profile:hover::before{
+  opacity:1;
+}
+
+.profile-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.identity{
+  display:flex;
+  gap:14px;
+}
+
+.avatar-wrap{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  padding:3px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
 }
 
 .profile img{
-width:100px;
-height:100px;
-border-radius:50%;
-margin-bottom:12px;
-object-fit:cover;
-border:2px solid rgba(255,255,255,0.2);
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:15px;
+  object-fit:cover;
+  filter:saturate(0.88) contrast(1.04);
+}
+
+.identity-copy{
+  padding-top:4px;
+}
+
+.member-tag{
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
 }
 
 .name{
-font-size:18px;
-letter-spacing:2px;
-text-align:center;
+  margin-top:6px;
+  font-family:"Rajdhani", sans-serif;
+  font-size:26px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
 }
 
 .handle{
-font-size:13px;
-opacity:0.6;
-margin-top:4px;
-margin-bottom:4px;
-letter-spacing:1px;
-text-align:center;
+  margin-top:2px;
+  color:var(--accent);
+  font-size:12px;
+  letter-spacing:0.12em;
 }
 
-/* BIO */
+.status{
+  min-width:88px;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:999px;
+  text-align:center;
+  color:var(--accent-strong);
+  background:rgba(255,255,255,0.02);
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+
 .bio{
-font-size:12px;
-opacity:0.7;
-text-align:center;
-min-height:30px;
-margin-bottom:8px;
-padding:0 5px;
+  min-height:48px;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.75;
 }
 
-/* BUTTONS */
+.meta{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+.meta-row{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,0.05);
+  font-size:12px;
+}
+
+.meta-row span:first-child{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  font-size:10px;
+}
+
+.meta-row span:last-child{
+  color:var(--text);
+}
+
 .buttons{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-justify-content:center;
-margin-top:auto;
+  margin-top:auto;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  padding-top:18px;
 }
 
 .profile-btn{
-border:1px solid rgba(255,255,255,0.2);
-padding:5px 12px;
-cursor:pointer;
-letter-spacing:2px;
-font-size:11px;
-text-transform:lowercase;
-text-decoration:none;
-color:white;
-background: rgba(255,255,255,0.05);
-backdrop-filter: blur(8px);
-border-radius:8px;
-transition:0.25s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:10px 14px;
+  border-radius:12px;
+  border-color:var(--line);
+  background:rgba(255,255,255,0.02);
+  color:var(--text);
+  text-decoration:none;
+  font-family:"Rajdhani", sans-serif;
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
 }
 
 .profile-btn:hover{
-background:white;
-color:black;
+  border-color:rgba(240, 232, 216, 0.22);
+  background:rgba(240, 232, 216, 0.08);
+  color:var(--accent-strong);
+}
+
+.fade-out{
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+.show{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+
+@media (max-width: 1150px){
+  .profile{
+    grid-column:span 4;
+  }
+}
+
+@media (max-width: 920px){
+  body{
+    overflow:auto;
+  }
+
+  #profile-screen{
+    position:relative;
+    justify-content:flex-start;
+    min-height:100vh;
+    padding:16px;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile{
+    grid-column:span 6;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+
+@media (max-width: 640px){
+  #enter-screen{
+    padding:14px;
+  }
+
+  .hero{
+    padding:18px;
+    border-radius:22px;
+  }
+
+  .hero-top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .title{
+    font-size:74px;
+  }
+
+  .profile{
+    grid-column:span 12;
+    min-height:320px;
+  }
+
+  .identity{
+    flex-direction:column;
+  }
+
+  .profile-head{
+    flex-direction:column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{
+    scroll-behavior:auto;
+    transition:none !important;
+    animation:none !important;
+  }
 }
 </style>
 </head>
 
 <body>
-
 <canvas id="snow"></canvas>
+<div class="vignette" aria-hidden="true"></div>
 
-<div id="enter-screen">
-  <div class="title">x_x</div>
-  <div class="enter-btn" onclick="enterSite()">enter</div>
-</div>
+<main class="shell">
+  <section id="enter-screen">
+    <div class="hero">
+      <div class="hero-top">
+        <div class="seal">Restricted Circle</div>
+        <div class="hero-tag">Invite Only</div>
+      </div>
 
-<div id="profile-screen">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 class="title">x_x</h1>
+          <p class="subtitle">
+            Built to feel closed, selective, and personal. Less like a public profile wall,
+            more like a private room for people who already know why they are here.
+          </p>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/charlie.webp">
-<div class="name">caught</div>
-<div class="bio" data-bio="alicia my love"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/californiacrazy2019" target="_blank">discord</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=iwhu" target="_blank">roblox</a>
-</div>
-</div>
+          <div class="hero-actions">
+            <button class="enter-btn" type="button" onclick="enterSite()">Access</button>
+            <button class="ghost-btn" type="button" onclick="previewProfiles()">View Roster</button>
+          </div>
+        </div>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/emre.webp">
-<div class="name">anemic</div>
-<div class="bio" data-bio="every time we talk, think i go off script"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank">discord</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=anemicx_v" target="_blank">roblox</a>
-</div>
-</div>
+        <aside class="hero-side">
+          <div class="hero-side-label">Room Status</div>
+          <div class="hero-side-list">
+            <div class="hero-side-item"><span>Visibility</span><span>Private</span></div>
+            <div class="hero-side-item"><span>Entry</span><span>Manual</span></div>
+            <div class="hero-side-item"><span>Presence</span><span>Tracked</span></div>
+            <div class="hero-side-item"><span>Roster</span><span>Internal</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/lana.webp">
-<div class="name">lana</div>
-<div class="bio" data-bio="i'll beat ur nan to death fam"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/yoursopatheticx_x" target="_blank">discord</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=lovesixck" target="_blank">roblox</a>
-<a class="profile-btn" href="https://tracker.gg/valorant/profile/riot/Lana%23blehs/overview" target="_blank">riot</a>
-</div>
-</div>
+  <section id="profile-screen" aria-hidden="true">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="brand-mark">x</div>
+        <div class="topbar-copy">
+          <h2>Private Roster</h2>
+          <p>Internal view only. Hover a card to reveal the line.</p>
+        </div>
+      </div>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/ethan.webp">
-<div class="name">seek</div>
-<div class="bio" data-bio="stronger on my own"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/skulling" target="_blank">discord</a>
-<a class="profile-btn" href="https://www.roblox.com/users/profile?username=x051910" target="_blank">roblox</a>
-</div>
-</div>
+      <div class="topbar-right">
+        <div class="pill">Locked</div>
+        <div class="pill">7 Members</div>
+        <button class="sound-toggle" type="button" onclick="toggleSound()">Sound: Off</button>
+      </div>
+    </div>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/zes.webp">
-<div class="name">zes</div>
-<div class="bio" data-bio="life is really hard, but my dick is harder"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/imbreviate" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/spiritualisted" target="_blank">telegram</a>
-</div>
-</div>
+    <div class="profiles-shell">
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/charlie.webp" alt="caught profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 01</div>
+              <div class="name">caught</div>
+              <div class="handle">@californiacrazy2019</div>
+            </div>
+          </div>
+          <div class="status">present</div>
+        </div>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/carnage.webp">
-<div class="name">carnage</div>
-<div class="bio" data-bio="born to rape the world"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/brainteasting" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/innoculate" target="_blank">telegram</a>
-</div>
-</div>
+        <div class="bio" data-bio="alicia my love"></div>
 
-<div class="profile">
-<div class="profile-top">
-<img src="images/vale.webp">
-<div class="name">vale</div>
-<div class="bio" data-bio="blue bands blue bands blue bands"></div>
-</div>
-<div class="buttons">
-<a class="profile-btn" href="https://discord.com/users/1093044147243450460" target="_blank">discord</a>
-<a class="profile-btn" href="https://t.me/curful" target="_blank">telegram</a>
-</div>
-</div>
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>core</span></div>
+          <div class="meta-row"><span>Signal</span><span>low noise</span></div>
+        </div>
 
-</div>
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/californiacrazy2019" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://www.roblox.com/users/profile?username=iwhu" target="_blank" rel="noreferrer">Roblox</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/emre.webp" alt="anemic profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 02</div>
+              <div class="name">anemic</div>
+              <div class="handle">@anemicx_v</div>
+            </div>
+          </div>
+          <div class="status">active</div>
+        </div>
+
+        <div class="bio" data-bio="every time we talk, think i go off script"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>trusted</span></div>
+          <div class="meta-row"><span>Signal</span><span>erratic</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/im_not_alex_g_and_ur_not_sarah" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://www.roblox.com/users/profile?username=anemicx_v" target="_blank" rel="noreferrer">Roblox</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/lana.webp" alt="lana profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 03</div>
+              <div class="name">lana</div>
+              <div class="handle">@lovesixck</div>
+            </div>
+          </div>
+          <div class="status">queued</div>
+        </div>
+
+        <div class="bio" data-bio="i'll still win the argument"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>inner</span></div>
+          <div class="meta-row"><span>Signal</span><span>sharp</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/yoursopatheticx_x" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://www.roblox.com/users/profile?username=lovesixck" target="_blank" rel="noreferrer">Roblox</a>
+          <a class="profile-btn" href="https://tracker.gg/valorant/profile/riot/Lana%23blehs/overview" target="_blank" rel="noreferrer">Riot</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/ethan.webp" alt="seek profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 04</div>
+              <div class="name">seek</div>
+              <div class="handle">@skulling</div>
+            </div>
+          </div>
+          <div class="status">steady</div>
+        </div>
+
+        <div class="bio" data-bio="stronger on my own"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>core</span></div>
+          <div class="meta-row"><span>Signal</span><span>clean</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/skulling" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://www.roblox.com/users/profile?username=x051910" target="_blank" rel="noreferrer">Roblox</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/zes.webp" alt="zes profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 05</div>
+              <div class="name">zes</div>
+              <div class="handle">@imbreviate</div>
+            </div>
+          </div>
+          <div class="status">live</div>
+        </div>
+
+        <div class="bio" data-bio="life gets messy, style does not"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>trusted</span></div>
+          <div class="meta-row"><span>Signal</span><span>loud</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/imbreviate" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://t.me/spiritualisted" target="_blank" rel="noreferrer">Telegram</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/carnage.webp" alt="carnage profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 06</div>
+              <div class="name">carnage</div>
+              <div class="handle">@brainteasting</div>
+            </div>
+          </div>
+          <div class="status">present</div>
+        </div>
+
+        <div class="bio" data-bio="born to make noise"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>internal</span></div>
+          <div class="meta-row"><span>Signal</span><span>volatile</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/brainteasting" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://t.me/innoculate" target="_blank" rel="noreferrer">Telegram</a>
+        </div>
+      </article>
+
+      <article class="profile">
+        <div class="profile-head">
+          <div class="identity">
+            <div class="avatar-wrap">
+              <img src="images/vale.webp" alt="vale profile picture">
+            </div>
+            <div class="identity-copy">
+              <div class="member-tag">Member 07</div>
+              <div class="name">vale</div>
+              <div class="handle">@curful</div>
+            </div>
+          </div>
+          <div class="status">locked</div>
+        </div>
+
+        <div class="bio" data-bio="blue bands, no static"></div>
+
+        <div class="meta">
+          <div class="meta-row"><span>Access</span><span>inner</span></div>
+          <div class="meta-row"><span>Signal</span><span>cold</span></div>
+        </div>
+
+        <div class="buttons">
+          <a class="profile-btn" href="https://discord.com/users/1093044147243450460" target="_blank" rel="noreferrer">Discord</a>
+          <a class="profile-btn" href="https://t.me/curful" target="_blank" rel="noreferrer">Telegram</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
 
 <script>
 let audioStarted = false;
+let bgAudio;
+let hoverTypingReady = false;
 
-function enterSite(){
-  const enter = document.getElementById("enter-screen");
-  const profiles = document.getElementById("profile-screen");
+const enterScreen = document.getElementById("enter-screen");
+const profileScreen = document.getElementById("profile-screen");
+const soundButton = document.querySelector(".sound-toggle");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  enter.style.opacity = "0";
+function showProfiles(){
+  enterScreen.classList.add("fade-out");
+  profileScreen.classList.add("show");
+  profileScreen.setAttribute("aria-hidden", "false");
 
-  setTimeout(()=>{
-    enter.style.display = "none";
-    profiles.style.opacity = "1";
-    profiles.style.pointerEvents = "auto";
-  },1000);
-
-  startMusic();
-  setupHoverTyping();
+  if(!hoverTypingReady){
+    setupHoverTyping();
+    hoverTypingReady = true;
+  }
 }
 
-let bgAudio;
+function enterSite(){
+  showProfiles();
+  startMusic();
+}
+
+function previewProfiles(){
+  showProfiles();
+}
 
 function startMusic(){
-  if(audioStarted) return;
+  if(audioStarted){
+    bgAudio.play();
+    syncSoundButton();
+    return;
+  }
 
   bgAudio = new Audio("media/song.mp3");
   bgAudio.loop = true;
-  bgAudio.volume = 0.7;
+  bgAudio.volume = 0.55;
 
-  bgAudio.play().then(()=>{
+  bgAudio.play().then(() => {
     audioStarted = true;
-  }).catch(()=>{
-    document.addEventListener("click", () => {
-      bgAudio.play();
-      audioStarted = true;
-    }, { once: true });
+    syncSoundButton();
+  }).catch(() => {
+    syncSoundButton("Tap For Sound");
   });
 }
 
-function typeWriter(el, text, speed = 25){
-  let i = 0;
+function toggleSound(){
+  if(!bgAudio){
+    startMusic();
+    return;
+  }
+
+  if(bgAudio.paused){
+    bgAudio.play().then(() => {
+      audioStarted = true;
+      syncSoundButton();
+    }).catch(() => {
+      syncSoundButton("Tap For Sound");
+    });
+  } else {
+    bgAudio.pause();
+    syncSoundButton();
+  }
+}
+
+function syncSoundButton(label){
+  if(label){
+    soundButton.textContent = label;
+    return;
+  }
+
+  soundButton.textContent = bgAudio && !bgAudio.paused ? "Sound: On" : "Sound: Off";
+}
+
+function typeWriter(el, text, speed = 24){
+  let index = 0;
 
   function type(){
     if(!el.isTyping) return;
 
-    if(i < text.length){
-      el.innerHTML += text.charAt(i);
-      i++;
+    if(index < text.length){
+      el.textContent += text.charAt(index);
+      index += 1;
       el.typingTimeout = setTimeout(type, speed);
     }
   }
@@ -342,12 +956,17 @@ function typeWriter(el, text, speed = 25){
 }
 
 function setupHoverTyping(){
-  document.querySelectorAll(".profile").forEach(profile => {
+  document.querySelectorAll(".profile").forEach((profile) => {
     const bio = profile.querySelector(".bio");
-    const text = bio.dataset.bio;
+    const text = bio.dataset.bio || "";
+
+    if(reduceMotion){
+      bio.textContent = text;
+      return;
+    }
 
     profile.addEventListener("mouseenter", () => {
-      bio.innerHTML = "";
+      bio.textContent = "";
       bio.isTyping = true;
       typeWriter(bio, text);
     });
@@ -355,70 +974,69 @@ function setupHoverTyping(){
     profile.addEventListener("mouseleave", () => {
       bio.isTyping = false;
       clearTimeout(bio.typingTimeout);
-      bio.innerHTML = "";
+      bio.textContent = "";
     });
   });
 }
 
-/* SNOW */
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
+let snowflakes = [];
 
 function resizeCanvas(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-const isMobile = window.innerWidth < 768;
-const FLAKE_COUNT = isMobile ? 120 : 220;
-
-let snowflakes = [];
 
 function createSnowflakes(){
+  const mobile = window.innerWidth < 768;
+  const count = mobile ? 60 : 120;
   snowflakes = [];
-  for(let i=0;i<FLAKE_COUNT;i++){
+
+  for(let i = 0; i < count; i += 1){
     snowflakes.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      size: Math.random()*1.2 + 0.3,
-      speedY: Math.random()*0.6 + 0.2,
-      speedX: Math.random()*0.3 - 0.15,
-      opacity: Math.random()*0.5 + 0.2
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.4 + 0.2,
+      speedY: Math.random() * 0.5 + 0.12,
+      speedX: Math.random() * 0.22 - 0.11,
+      opacity: Math.random() * 0.34 + 0.08
     });
   }
 }
 
-createSnowflakes();
-
 function drawSnow(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  for(let flake of snowflakes){
+  for(const flake of snowflakes){
     ctx.beginPath();
-    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI*2);
+    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255,255,255,${flake.opacity})`;
     ctx.fill();
 
     flake.y += flake.speedY;
-    flake.x += flake.speedX;
-    flake.x += Math.sin(flake.y * 0.01) * 0.2;
+    flake.x += flake.speedX + Math.sin(flake.y * 0.01) * 0.12;
 
-    if(flake.y > canvas.height){
-      flake.y = -5;
-      flake.x = Math.random()*canvas.width;
+    if(flake.y > canvas.height + 6){
+      flake.y = -6;
+      flake.x = Math.random() * canvas.width;
     }
 
-    if(flake.x > canvas.width) flake.x = 0;
-    if(flake.x < 0) flake.x = canvas.width;
+    if(flake.x > canvas.width + 6) flake.x = -6;
+    if(flake.x < -6) flake.x = canvas.width + 6;
   }
 
   requestAnimationFrame(drawSnow);
 }
 
+resizeCanvas();
+createSnowflakes();
 drawSnow();
-</script>
 
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  createSnowflakes();
+});
+</script>
 </body>
 </html>

@@ -1101,6 +1101,7 @@ function showEnterScreen(){
   profileScreen.setAttribute("aria-hidden", "true");
   enterScreen.classList.remove("fade-out");
   document.body.classList.remove("profiles-visible");
+  stopMainAudio();
   stopFbiAudio();
   window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
 }
@@ -1318,6 +1319,16 @@ function handleAudioFailure(){
   soundUnavailable = true;
   soundButton.disabled = true;
   syncSoundButton("Sound unavailable");
+}
+
+function stopMainAudio(){
+  if(!bgAudio){
+    return;
+  }
+
+  bgAudio.pause();
+  bgAudio.currentTime = 0;
+  syncSoundButton();
 }
 
 function playFbiAudio(){

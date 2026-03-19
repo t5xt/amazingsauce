@@ -140,7 +140,6 @@ body.profiles-visible{
 }
 
 .seal,
-.member-tag,
 .pill{
   letter-spacing:0.18em;
   text-transform:uppercase;
@@ -168,6 +167,144 @@ body.profiles-visible{
   gap:12px;
   flex-wrap:wrap;
   margin-top:8px;
+}
+
+.terminal-panel{
+  margin-top:18px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(9,9,9,0.98), rgba(3,3,3,1));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  opacity:0;
+  max-height:0;
+  pointer-events:none;
+  transform:translateY(-8px);
+  transition:max-height 0.28s ease, opacity 0.28s ease, transform 0.28s ease;
+}
+
+.terminal-panel.show{
+  opacity:1;
+  max-height:360px;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.terminal-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+.terminal-lights{
+  display:flex;
+  gap:8px;
+}
+
+.terminal-lights span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.12);
+  box-shadow:var(--glow);
+}
+
+.terminal-title{
+  color:var(--muted-strong);
+  font-family:"Rajdhani", sans-serif;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+
+.terminal-close{
+  min-height:36px;
+  padding:8px 12px;
+  border-radius:10px;
+  font-family:"Rajdhani", sans-serif;
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+}
+
+.terminal-body{
+  padding:16px;
+  font-family:"Consolas","Courier New",monospace;
+}
+
+.terminal-output{
+  min-height:148px;
+  max-height:190px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.025) 0,
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px,
+      transparent 22px
+    );
+  color:#f3f3f3;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre-line;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,0.34) rgba(255,255,255,0.04);
+}
+
+.terminal-output::-webkit-scrollbar{
+  width:10px;
+}
+
+.terminal-output::-webkit-scrollbar-track{
+  background:rgba(255,255,255,0.04);
+  border-radius:999px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.26);
+  border-radius:999px;
+  border:2px solid rgba(0,0,0,0);
+  background-clip:padding-box;
+}
+
+.terminal-input-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+  background:rgba(255,255,255,0.02);
+}
+
+.terminal-prompt{
+  color:var(--muted-strong);
+  font-size:13px;
+}
+
+.terminal-input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:var(--text);
+  font-family:"Consolas","Courier New",monospace;
+  font-size:13px;
+}
+
+.terminal-input::placeholder{
+  color:var(--muted);
 }
 
 .hero-meta{
@@ -413,11 +550,6 @@ body.profiles-visible{
   padding-top:4px;
 }
 
-.member-tag{
-  color:var(--muted);
-  font-size:10px;
-}
-
 .name{
   margin-top:6px;
   font-family:"Rajdhani", sans-serif;
@@ -505,6 +637,11 @@ body.profiles-visible{
     padding:24px;
   }
 
+  .terminal-input-row{
+    flex-wrap:wrap;
+    align-items:flex-start;
+  }
+
   .profile{
     grid-column:span 6;
   }
@@ -557,6 +694,32 @@ body.profiles-visible{
 
         <div class="hero-actions">
           <button class="enter-btn" type="button" data-action="enter">Enter Room</button>
+          <button class="ghost-btn" type="button" data-action="terminal">Open Terminal</button>
+        </div>
+
+        <div class="terminal-panel" id="terminal-panel" aria-hidden="true">
+          <div class="terminal-bar">
+            <div class="terminal-lights" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="terminal-title">Command Prompt</div>
+            <button class="ghost-btn terminal-close" type="button" data-action="close-terminal">Close</button>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-output" id="terminal-output">Microsoft Windows [Version 10.0.22631.0000]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\lurki.ng> help
+Available commands: help, enter, members, pip install opsec, pip locate israel, clear
+
+C:\lurki.ng></div>
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">C:\lurki.ng&gt;</span>
+              <input class="terminal-input" id="terminal-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command">
+            </div>
+          </div>
         </div>
 
         <div class="hero-meta">
@@ -749,11 +912,17 @@ let soundUnavailable = false;
 const enterScreen = document.getElementById("enter-screen");
 const profileScreen = document.getElementById("profile-screen");
 const soundButton = document.querySelector(".sound-toggle");
+const terminalPanel = document.getElementById("terminal-panel");
+const terminalOutput = document.getElementById("terminal-output");
+const terminalInput = document.getElementById("terminal-input");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 document.querySelector('[data-action="enter"]').addEventListener("click", enterSite);
+document.querySelector('[data-action="terminal"]').addEventListener("click", toggleTerminal);
+document.querySelector('[data-action="close-terminal"]').addEventListener("click", closeTerminal);
 document.querySelector('[data-action="back"]').addEventListener("click", showEnterScreen);
 soundButton.addEventListener("click", toggleSound);
+terminalInput.addEventListener("keydown", handleTerminalInput);
 
 function showProfiles(){
   enterScreen.classList.add("fade-out");
@@ -782,6 +951,82 @@ function showEnterScreen(){
 function enterSite(){
   showProfiles();
   startMusic();
+}
+
+function toggleTerminal(){
+  const isOpen = terminalPanel.classList.contains("show");
+
+  if(isOpen){
+    closeTerminal();
+    return;
+  }
+
+  terminalPanel.classList.add("show");
+  terminalPanel.setAttribute("aria-hidden", "false");
+  terminalInput.focus();
+}
+
+function closeTerminal(){
+  terminalPanel.classList.remove("show");
+  terminalPanel.setAttribute("aria-hidden", "true");
+}
+
+function handleTerminalInput(event){
+  if(event.key !== "Enter"){
+    return;
+  }
+
+  const value = terminalInput.value.trim();
+  if(!value){
+    return;
+  }
+
+  const command = value.toLowerCase();
+  appendTerminalLine(`C:\\lurki.ng> ${value}`);
+
+  if(command === "help"){
+    appendTerminalLine("Available commands: help, enter, members, pip install opsec, pip locate israel, clear");
+  } else if(command === "enter"){
+    appendTerminalLine("Opening private afterpary...");
+    terminalInput.value = "";
+    enterSite();
+    return;
+  } else if(command === "members"){
+    appendTerminalLine("Members online: caught, anemic, lana, seek, zes, carnage, vale");
+  } else if(command === "pip install opsec"){
+    const demoIp = generateDemoIp();
+    appendTerminalLine("Collecting opsec");
+    appendTerminalLine("Downloading opsec-7.0.0-py3-none-any.whl");
+    appendTerminalLine("Installing collected packages: opsec");
+    appendTerminalLine("Successfully installed opsec-7.0.0");
+    appendTerminalLine("Trace result: demo lookup enabled");
+    appendTerminalLine(`Demo output: ${demoIp}`);
+  } else if(command === "pip locate israel"){
+    appendTerminalLine("Collecting geo-trace");
+    appendTerminalLine("Scanning mirrored endpoints");
+    appendTerminalLine("Resolving fallback coordinates");
+    appendTerminalLine("Israel lookup redirected");
+    appendTerminalLine("Location found: Little Saint James Island");
+  } else if(command === "clear"){
+    terminalOutput.textContent = "Microsoft Windows [Version 10.0.22631.0000]\n(c) Microsoft Corporation. All rights reserved.\n\nC:\\lurki.ng>";
+    terminalInput.value = "";
+    return;
+  } else {
+    appendTerminalLine(`'${value}' is not recognized as an internal or external command.`);
+  }
+
+  appendTerminalLine("C:\\lurki.ng>");
+  terminalInput.value = "";
+}
+
+function appendTerminalLine(text){
+  terminalOutput.textContent += `\n${text}`;
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+function generateDemoIp(){
+  const octets = Array.from({ length:4 }, () => Math.floor(Math.random() * 254) + 1);
+  return octets.join(".");
 }
 
 function startMusic(){

@@ -183,8 +183,7 @@ body.profiles-visible{
   transition:max-height 0.28s ease, opacity 0.28s ease, transform 0.28s ease;
 }
 
-.terminal-panel.show,
-.chat-panel.show{
+.terminal-panel.show{
   opacity:1;
   pointer-events:auto;
   transform:translateY(0);
@@ -194,35 +193,7 @@ body.profiles-visible{
   max-height:360px;
 }
 
-.chat-panel.show{
-  max-height:460px;
-}
-
-.chat-panel{
-  margin-top:18px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:linear-gradient(180deg, rgba(9,9,9,0.98), rgba(3,3,3,1));
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  opacity:0;
-  max-height:0;
-  pointer-events:none;
-  transform:translateY(-8px);
-  transition:max-height 0.28s ease, opacity 0.28s ease, transform 0.28s ease;
-}
-
 .terminal-bar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 14px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-}
-
-.chat-bar{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -267,13 +238,6 @@ body.profiles-visible{
 .terminal-body{
   padding:16px;
   font-family:"Consolas","Courier New",monospace;
-}
-
-.chat-body{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding:16px;
 }
 
 .terminal-output{
@@ -344,105 +308,6 @@ body.profiles-visible{
 
 .terminal-input::placeholder{
   color:var(--muted);
-}
-
-.chat-feed{
-  min-height:148px;
-  max-height:240px;
-  padding:14px;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
-    repeating-linear-gradient(
-      180deg,
-      rgba(255,255,255,0.02) 0,
-      rgba(255,255,255,0.02) 1px,
-      transparent 1px,
-      transparent 28px
-    );
-  overflow-y:auto;
-  display:grid;
-  gap:10px;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(255,255,255,0.34) rgba(255,255,255,0.04);
-}
-
-.chat-feed::-webkit-scrollbar{
-  width:10px;
-}
-
-.chat-feed::-webkit-scrollbar-track{
-  background:rgba(255,255,255,0.04);
-  border-radius:999px;
-}
-
-.chat-feed::-webkit-scrollbar-thumb{
-  background:rgba(255,255,255,0.26);
-  border-radius:999px;
-  border:2px solid rgba(0,0,0,0);
-  background-clip:padding-box;
-}
-
-.chat-entry{
-  padding:12px 14px;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
-  background:rgba(255,255,255,0.03);
-}
-
-.chat-entry-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:6px;
-  color:var(--muted-strong);
-  font-family:"Rajdhani", sans-serif;
-  font-size:12px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-}
-
-.chat-entry-body{
-  color:var(--text);
-  font-size:14px;
-  line-height:1.6;
-  word-break:break-word;
-}
-
-.chat-empty{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-}
-
-.chat-compose{
-  display:flex;
-  gap:10px;
-  margin-top:0;
-  flex-shrink:0;
-}
-
-.chat-input{
-  flex:1;
-  min-height:48px;
-  padding:12px 14px;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
-  outline:none;
-  background:rgba(255,255,255,0.02);
-  color:var(--text);
-  font-family:"Manrope", sans-serif;
-  font-size:14px;
-}
-
-.chat-input::placeholder{
-  color:var(--muted);
-}
-
-.chat-send{
-  min-width:124px;
 }
 
 .hero-meta{
@@ -833,7 +698,6 @@ body.profiles-visible{
         <div class="hero-actions">
           <button class="enter-btn" type="button" data-action="enter">Enter Room</button>
           <button class="ghost-btn" type="button" data-action="terminal">Open Terminal</button>
-          <button class="ghost-btn" type="button" data-action="chat">Chat Box</button>
         </div>
 
         <div class="terminal-panel" id="terminal-panel" aria-hidden="true">
@@ -857,22 +721,6 @@ C:\lurki.ng></div>
             <div class="terminal-input-row">
               <span class="terminal-prompt">C:\lurki.ng&gt;</span>
               <input class="terminal-input" id="terminal-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command">
-            </div>
-          </div>
-        </div>
-
-        <div class="chat-panel" id="chat-panel" aria-hidden="true">
-          <div class="chat-bar">
-            <div class="terminal-title">Public Chat</div>
-            <button class="ghost-btn terminal-close" type="button" data-action="close-chat">Close</button>
-          </div>
-          <div class="chat-body">
-            <div class="chat-feed" id="chat-feed">
-              <div class="chat-empty">No messages yet. Say something as anonymous.</div>
-            </div>
-            <div class="chat-compose">
-              <input class="chat-input" id="chat-input" type="text" maxlength="240" autocomplete="off" spellcheck="false" placeholder="type a message">
-              <button class="ghost-btn chat-send" type="button" data-action="send-chat">Send</button>
             </div>
           </div>
         </div>
@@ -1063,7 +911,6 @@ let audioStarted = false;
 let bgAudio = null;
 let hoverTypingReady = false;
 let soundUnavailable = false;
-const CHAT_STORAGE_KEY = "lurking_public_chat_messages";
 
 const enterScreen = document.getElementById("enter-screen");
 const profileScreen = document.getElementById("profile-screen");
@@ -1071,21 +918,14 @@ const soundButton = document.querySelector(".sound-toggle");
 const terminalPanel = document.getElementById("terminal-panel");
 const terminalOutput = document.getElementById("terminal-output");
 const terminalInput = document.getElementById("terminal-input");
-const chatPanel = document.getElementById("chat-panel");
-const chatFeed = document.getElementById("chat-feed");
-const chatInput = document.getElementById("chat-input");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 document.querySelector('[data-action="enter"]').addEventListener("click", enterSite);
 document.querySelector('[data-action="terminal"]').addEventListener("click", toggleTerminal);
 document.querySelector('[data-action="close-terminal"]').addEventListener("click", closeTerminal);
-document.querySelector('[data-action="chat"]').addEventListener("click", toggleChat);
-document.querySelector('[data-action="close-chat"]').addEventListener("click", closeChat);
-document.querySelector('[data-action="send-chat"]').addEventListener("click", submitChatMessage);
 document.querySelector('[data-action="back"]').addEventListener("click", showEnterScreen);
 soundButton.addEventListener("click", toggleSound);
 terminalInput.addEventListener("keydown", handleTerminalInput);
-chatInput.addEventListener("keydown", handleChatInput);
 
 function showProfiles(){
   enterScreen.classList.add("fade-out");
@@ -1126,32 +966,12 @@ function toggleTerminal(){
 
   terminalPanel.classList.add("show");
   terminalPanel.setAttribute("aria-hidden", "false");
-  closeChat();
   terminalInput.focus();
 }
 
 function closeTerminal(){
   terminalPanel.classList.remove("show");
   terminalPanel.setAttribute("aria-hidden", "true");
-}
-
-function toggleChat(){
-  const isOpen = chatPanel.classList.contains("show");
-
-  if(isOpen){
-    closeChat();
-    return;
-  }
-
-  chatPanel.classList.add("show");
-  chatPanel.setAttribute("aria-hidden", "false");
-  closeTerminal();
-  chatInput.focus();
-}
-
-function closeChat(){
-  chatPanel.classList.remove("show");
-  chatPanel.setAttribute("aria-hidden", "true");
 }
 
 function handleTerminalInput(event){
@@ -1210,77 +1030,6 @@ function appendTerminalLine(text){
 function generateDemoIp(){
   const octets = Array.from({ length:4 }, () => Math.floor(Math.random() * 254) + 1);
   return octets.join(".");
-}
-
-function handleChatInput(event){
-  if(event.key === "Enter"){
-    event.preventDefault();
-    submitChatMessage();
-  }
-}
-
-function submitChatMessage(){
-  const text = chatInput.value.trim();
-  if(!text){
-    return;
-  }
-
-  const messages = loadChatMessages();
-  messages.push({
-    author:"anonymous",
-    text,
-    time:new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })
-  });
-
-  saveChatMessages(messages);
-  renderChatMessages(messages);
-  chatInput.value = "";
-  chatInput.focus();
-}
-
-function loadChatMessages(){
-  try{
-    const raw = window.localStorage.getItem(CHAT_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveChatMessages(messages){
-  try{
-    window.localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
-  } catch {
-    // Ignore storage failures and keep the chat usable for the current session.
-  }
-}
-
-function renderChatMessages(messages = loadChatMessages()){
-  if(!messages.length){
-    chatFeed.innerHTML = '<div class="chat-empty">No messages yet. Say something as anonymous.</div>';
-    return;
-  }
-
-  chatFeed.innerHTML = messages.map((message) => `
-    <article class="chat-entry">
-      <div class="chat-entry-head">
-        <span>${escapeHtml(message.author)}</span>
-        <span>${escapeHtml(message.time)}</span>
-      </div>
-      <div class="chat-entry-body">${escapeHtml(message.text)}</div>
-    </article>
-  `).join("");
-
-  chatFeed.scrollTop = chatFeed.scrollHeight;
-}
-
-function escapeHtml(value){
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 function startMusic(){

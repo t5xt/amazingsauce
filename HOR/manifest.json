@@ -1,5 +1,8 @@
 {
   "images": [
-    "HOR/losers.png"
+    {
+      "src": "HOR/losers.png",
+      "caption": "snap: http.eliee\ninsta: http.eliee_"
+    }
   ]
 }

@@ -2,28 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>lurki.ng</title>
 
-  <meta property="og:title" content="cats.gif">
-  <meta property="og:description" content="cats.gif">
-  <meta property="og:image" content="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
-  <meta property="og:type" content="website">
+  <!-- Make embed ONLY show the GIF -->
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="image">
+
+  <!-- IMPORTANT: use RAW GitHub link -->
+  <meta property="og:image" content="cats.gif">
+
+  <!-- Helps Discord treat it like a GIF -->
+  <meta property="og:image:type" content="image/gif">
+
+  <!-- Optional: force better embed -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="cats.gif">
 
   <style>
     body {
       margin: 0;
-      background-color: black;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: Arial, sans-serif;
     }
 
     h1 {
       color: white;
-      font-size: 1.8rem;
-      text-align: center;
+      font-size: 1.5rem;
+      font-family: Arial, sans-serif;
     }
   </style>
 </head>

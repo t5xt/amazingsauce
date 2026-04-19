@@ -1,8 +1,0 @@
-name = "lurki-ng"
-compatibility_date = "2026-04-19"
-pages_build_output_dir = "."
-
-[[kv_namespaces]]
-binding = "UPLOADS"
-id = "replace-with-your-cloudflare-kv-id"
-preview_id = "replace-with-your-cloudflare-preview-kv-id"

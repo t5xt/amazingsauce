@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lurki.ng | Image Upload</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260420c">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="orb orb-left"></div>
+    <div class="orb orb-right"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">lurki.ng</span>
+      </div>
+      <div class="auth-actions" id="authActions">
+        <button class="header-button" id="loginButton" type="button">Log in</button>
+        <button class="header-button header-button-primary" id="signupButton" type="button">Sign up</button>
+      </div>
+      <div class="account-actions" id="accountActions" hidden>
+        <span class="account-chip" id="accountChip">guest</span>
+        <div class="admin-actions" id="adminActions" hidden>
+          <button class="header-button" id="adminStatsButton" type="button">Stats</button>
+          <button class="header-button" id="banPanelButton" type="button">Ban panel</button>
+        </div>
+        <button class="header-button" id="logoutButton" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="hero-grid">
+      <section class="upload-panel" id="upload-panel">
+        <div class="panel-header">
+          <span class="status-pill" id="statusPill">Ready</span>
+        </div>
+
+        <label class="dropzone" id="dropzone" for="imageInput">
+          <input id="imageInput" type="file" accept="image/*" multiple>
+          <div class="dropzone-content">
+            <span class="dropzone-icon">+</span>
+            <strong>Drop an image here</strong>
+            <p>or tap to choose one or more files</p>
+            <span class="dropzone-hint">Paste from clipboard works too</span>
+          </div>
+        </label>
+
+        <div class="duration-picker" role="group" aria-label="Select active duration">
+          <span class="duration-label">Active for</span>
+          <div class="duration-options">
+            <button class="duration-option is-selected" type="button" data-duration-hours="3">3h</button>
+            <button class="duration-option" type="button" data-duration-hours="24">24h</button>
+            <button class="duration-option" type="button" data-duration-hours="48">48h</button>
+          </div>
+        </div>
+
+        <section class="progress-card" id="progressCard" hidden>
+          <div class="progress-header">
+            <span id="progressLabel">Uploading...</span>
+            <strong id="progressValue">0%</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </section>
+
+        <section class="preview-card">
+          <div class="preview-frame">
+            <img id="previewImage" alt="Selected preview">
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <span>Image preview will appear here</span>
+            </div>
+          </div>
+
+          <div class="preview-meta">
+            <div class="meta-row">
+              <span>File Link</span>
+              <div class="meta-link-group">
+                <strong id="fileName">No link yet</strong>
+                <div class="meta-actions">
+                  <button id="copyButton" class="mini-copy-button" type="button">Copy</button>
+                  <button id="copyRawButton" class="mini-copy-button" type="button">Raw</button>
+                </div>
+              </div>
+            </div>
+            <div class="meta-row">
+              <span>File Name</span>
+              <strong id="displayName">No file yet</strong>
+            </div>
+            <div class="meta-row">
+              <span>Size</span>
+              <strong id="fileSize">0 MB</strong>
+            </div>
+            <div class="meta-row">
+              <span>Expires In</span>
+              <strong id="expiryTimer">--:--:--</strong>
+            </div>
+            <div class="meta-row">
+              <span>Expires At</span>
+              <strong id="expiryExact">--</strong>
+            </div>
+            <div class="meta-row">
+              <span>Views</span>
+              <strong id="viewCount">0</strong>
+            </div>
+          </div>
+
+          <div class="preview-toolbar">
+            <button id="deleteButton" class="toolbar-button" type="button">Delete upload</button>
+          </div>
+        </section>
+
+        <section class="extras-grid">
+          <section class="extra-card qr-card">
+            <div class="extra-header">
+              <span>QR Code</span>
+            </div>
+            <div class="qr-frame">
+              <img id="qrImage" alt="QR code for uploaded link">
+              <div class="extra-placeholder" id="qrPlaceholder">QR appears after upload</div>
+            </div>
+          </section>
+
+          <section class="extra-card uploads-card">
+            <div class="extra-header">
+              <span>Recent uploads</span>
+              <div class="uploads-meta">
+                <span class="uploads-source" id="uploadsSource">Guest mode</span>
+                <span id="uploadCount">0</span>
+              </div>
+            </div>
+            <div class="upload-list" id="uploadList">
+              <div class="extra-placeholder">Your uploaded images will show here</div>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="auth-modal" id="authModal" hidden>
+    <div class="auth-backdrop" id="authBackdrop"></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div class="auth-dialog-header">
+        <div>
+          <p class="auth-kicker" id="authKicker">Optional account</p>
+          <h2 id="authTitle">Sign up</h2>
+        </div>
+        <button class="auth-close" id="authCloseButton" type="button">Close</button>
+      </div>
+
+      <p class="auth-copy">
+        Accounts are optional. Guests can still upload normally, but signed-in users keep a full upload history.
+      </p>
+
+      <form class="auth-form" id="authForm">
+        <label class="auth-field">
+          <span>Username</span>
+          <input id="authUsername" name="username" type="text" minlength="3" maxlength="20" autocomplete="username" required>
+        </label>
+        <label class="auth-field">
+          <span>Password</span>
+          <input id="authPassword" name="password" type="password" minlength="8" autocomplete="current-password" required>
+        </label>
+        <button class="auth-submit" id="authSubmitButton" type="submit">Create account</button>
+      </form>
+
+      <p class="auth-status" id="authStatus">Use letters, numbers, and underscores in your username.</p>
+      <button class="auth-toggle" id="authToggleMode" type="button">Already have an account? Log in</button>
+    </section>
+  </div>
+
+  <div class="auth-modal" id="adminStatsModal" hidden>
+    <div class="auth-backdrop" id="adminStatsBackdrop"></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="adminStatsTitle">
+      <div class="auth-dialog-header">
+        <div>
+          <p class="auth-kicker">Admin tools</p>
+          <h2 id="adminStatsTitle">Stats</h2>
+        </div>
+        <button class="auth-close" id="adminStatsCloseButton" type="button">Close</button>
+      </div>
+      <div class="extra-header admin-modal-actions">
+        <span>Global overview</span>
+        <button class="mini-copy-button" id="adminRefreshButton" type="button">Refresh</button>
+      </div>
+      <div class="admin-stats-grid">
+        <div class="admin-stat">
+          <span>Global uploads</span>
+          <strong id="adminGlobalUploads">0</strong>
+        </div>
+        <div class="admin-stat">
+          <span>Global views</span>
+          <strong id="adminGlobalViews">0</strong>
+        </div>
+      </div>
+      <div class="admin-leaderboard">
+        <div class="extra-header">
+          <span>Top uploaders</span>
+        </div>
+        <div class="admin-leaderboard-list" id="adminLeaderboard">
+          <div class="extra-placeholder">No admin stats loaded yet</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="auth-modal" id="banModal" hidden>
+    <div class="auth-backdrop" id="banBackdrop"></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="banModalTitle">
+      <div class="auth-dialog-header">
+        <div>
+          <p class="auth-kicker">Admin tools</p>
+          <h2 id="banModalTitle">Ban panel</h2>
+        </div>
+        <button class="auth-close" id="banCloseButton" type="button">Close</button>
+      </div>
+      <form class="ban-form" id="banForm">
+        <label class="auth-field">
+          <span>Username</span>
+          <input id="banUsername" name="banUsername" type="text" autocomplete="off" required>
+        </label>
+        <label class="auth-field">
+          <span>Reason</span>
+          <input id="banReason" name="banReason" type="text" autocomplete="off" required>
+        </label>
+        <label class="auth-field">
+          <span>Duration (hours)</span>
+          <input id="banDuration" name="banDuration" type="number" min="1" step="1" value="24" required>
+        </label>
+        <button class="auth-submit" id="banSubmitButton" type="submit">Ban account</button>
+      </form>
+      <p class="auth-status" id="banStatus">Only admin accounts can use this panel.</p>
+    </section>
+  </div>
+
+  <script src="script.js?v=20260420c"></script>
+</body>
+</html>

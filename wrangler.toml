@@ -1,0 +1,8 @@
+name = "lurki-ng"
+compatibility_date = "2026-04-19"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "UPLOADS"
+id = "8f726f6e48ef4494998ade877794ef11"
+preview_id = "8f726f6e48ef4494998ade877794ef11"

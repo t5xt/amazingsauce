@@ -1,0 +1,11 @@
+name = "lurki-ng-premium-cron"
+main = "premium-cron.js"
+compatibility_date = "2026-04-20"
+
+[[kv_namespaces]]
+binding = "UPLOADS"
+id = "8f726f6e48ef4494998ade877794ef11"
+preview_id = "8f726f6e48ef4494998ade877794ef11"
+
+[triggers]
+crons = ["*/5 * * * *"]

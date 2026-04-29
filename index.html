@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>corpse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      color: #b8c7d9;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.12em;
+      font-weight: 300;
+      font-size: clamp(0.9rem, 2vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      position: relative;
+    }
+
+    .title {
+      position: relative;
+      z-index: 2;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: #b8c7d9;
+      opacity: 0;
+      animation: blink 1.6s infinite ease-in-out;
+      box-shadow: 0 0 8px #b8c7d9;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0; transform: scale(0.4); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    .meteor {
+      position: absolute;
+      top: -80px;
+      left: -260px;
+      width: 100px;
+      height: 5px;
+      opacity: 0;
+      transform: rotate(28deg);
+      animation: meteor-pass 30s linear infinite;
+      filter: blur(0.2px) drop-shadow(0 0 12px #b8c7d9) drop-shadow(0 0 26px #7f95ad);
+      z-index: 1;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 97% 50%, #ffffff 0 4px, #dce8f5 5px, rgba(184,199,217,0.9) 8px, transparent 12px),
+        linear-gradient(90deg, transparent 0%, rgba(184,199,217,0.01) 12%, rgba(184,199,217,0.08) 28%, rgba(184,199,217,0.22) 52%, rgba(184,199,217,0.55) 76%, rgba(220,232,245,0.95) 100%);
+    }
+
+    .meteor::before {
+      content: "";
+      position: absolute;
+      right: 18px;
+      top: -8px;
+      width: 180px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at right, rgba(184, 199, 217, 0.28), transparent 70%);
+      filter: blur(11px);
+    }
+
+    .meteor::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: -3px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0 20%, #d9e6f5 35%, #8fa6bf 62%, transparent 72%);
+      box-shadow: 0 0 24px #d9e6f5, 0 0 48px #8fa6bf, 0 0 72px rgba(143,166,191,0.45);
+    }
+
+    
+
+    @keyframes meteor-pass {
+      0% {
+        opacity: 0;
+        transform: translate(-10vw, -10vh) rotate(28deg);
+      }
+      2% {
+        opacity: 1;
+      }
+      8% {
+        opacity: 1;
+        transform: translate(130vw, 110vh) rotate(28deg);
+      }
+      10%, 100% {
+        opacity: 0;
+        transform: translate(130vw, 110vh) rotate(28deg);
+      }
+    }
+      8% { opacity: 1; }
+      85% { opacity: 1; }
+      100% {
+        opacity: 0;
+        transform: translate(130vw, 110vh) rotate(28deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="meteor"></div>
+  
+
+  <script>
+    const STAR_COUNT = 80;
+
+    const meteor = document.querySelector('.meteor');
+
+    function randomizeMeteor() {
+      const angle = 18 + Math.random() * 28;
+      meteor.style.transform = `rotate(${angle}deg)`;
+    }
+
+    setInterval(randomizeMeteor, 30000);
+    randomizeMeteor();
+
+    function randomizeStar(star) {
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.top = Math.random() * 100 + "vh";
+      const size = 1 + Math.random() * 2.4;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+      star.style.animationDuration = 0.9 + Math.random() * 1.8 + "s";
+      star.style.animationDelay = Math.random() * 1.2 + "s";
+    }
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      randomizeStar(star);
+      document.body.appendChild(star);
+
+      star.addEventListener("animationiteration", () => {
+        randomizeStar(star);
+      });
+    }
+  </script>
+</body>
+</html>
